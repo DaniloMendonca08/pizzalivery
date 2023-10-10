@@ -57,13 +57,21 @@ export default function Sizes() {
   ]
 
   const [sizeId, setSizeId] = useState("")
+  const [flavourId, setFlavourId] = useState("")
 
   const getPizzaSize = (id: string) => {
     return sizeOptions.filter((option) => option.id === id)
   }
 
+  const getPizzaFlavour = (flavours: number) => {
+    return sizeOptions.filter((option) =>option.flavours === flavours )
+  }
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSizeId(event.target.value)
+    setSizeId(event.target.id)
+    
+    setFlavourId(event.target.value)
+    
   }
 
   const handleBack = () => {
@@ -73,7 +81,18 @@ export default function Sizes() {
   const handleNext = () => {
     const selectedSize = getPizzaSize(sizeId)
     setPizzaSize(selectedSize)
-    navigate(routes.pizzaFlavour)
+
+    const selectedQntityFlavours = getPizzaFlavour(flavourId)
+    setFlavourId(selectedQntityFlavours)
+
+    if (flavourId === "2") {
+      navigate(routes.pizza2Flavours)
+    
+    } else if (flavourId === "1") {
+      navigate(routes.pizzaFlavour)
+    }
+
+    // navigate(routes.pizzaFlavour)
   }
 
   useEffect(() => {
@@ -93,7 +112,7 @@ export default function Sizes() {
               id={id}
               name="sizes"
               onChange={handleChange}
-              value={id}
+              value={flavours}
               checked={sizeId === id}
             />
             <label htmlFor={id}>
