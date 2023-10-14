@@ -9,7 +9,7 @@ import OrderContext from "../../contexts/OrderContext"
 
 export default function Sizes() {
   const navigate = useNavigate()
-  const { pizzaSize, setPizzaSize } = useContext(OrderContext)
+  const { pizzaSize, setPizzaSize, flavourId, setFlavourId } = useContext(OrderContext)
 
   const sizeOptions = [
     {
@@ -57,7 +57,6 @@ export default function Sizes() {
   ]
 
   const [sizeId, setSizeId] = useState("")
-  const [flavourId, setFlavourId] = useState("")
 
   const getPizzaSize = (id: string) => {
     return sizeOptions.filter((option) => option.id === id)
