@@ -61,10 +61,22 @@ export default function Checkout() {
       <CheckoutItem>
         <h2>Items</h2>
         <CheckoutItemFlex>
+          {pizzaOrder.item.name2 ? <p>Metade</p> : ""}
+          
           <p>
             {pizzaOrder?.item.name}/{pizzaOrder?.item.size}
           </p>
           <p>{convertToCurrency(pizzaOrder?.item.value)}</p>
+
+          {pizzaOrder.item.name2 ? (
+            <>
+            <p>Metade</p>
+            <p>
+            {pizzaOrder?.item.name2}/{pizzaOrder?.item.size2}
+            </p>
+          <p>{convertToCurrency(pizzaOrder?.item.value2)}</p>
+            </>) : ""}
+          
         </CheckoutItemFlex>
       </CheckoutItem>
       <CheckoutItem>
