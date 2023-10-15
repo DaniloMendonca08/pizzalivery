@@ -56,6 +56,7 @@ const OrderContextProvider = ({ children }) => {
   const [pizzaSecondFlavour, setPizzaSecondFlavour] = useState()
   const [pizzaOrder, setPizzaOrder] = useState()
   const [flavourId, setFlavourId] = useState("")
+  const [qtdePizzas, setQtdePizzas] = useState()
 
   return (
     <OrderContext.Provider
@@ -69,7 +70,9 @@ const OrderContextProvider = ({ children }) => {
         pizzaOrder,
         setPizzaOrder,
         flavourId,
-        setFlavourId
+        setFlavourId,
+        qtdePizzas,
+        setQtdePizzas
       }}
     >
       {children}
