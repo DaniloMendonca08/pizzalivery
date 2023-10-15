@@ -91,7 +91,7 @@ export default function Checkout() {
               onChange={handleChange}
             >
               <option disabled value="">
-                Selcione
+                Selecione
               </option>
               {paymentOptions.map(({ id, value, text }) => (
                 <option key={id} value={value}>
