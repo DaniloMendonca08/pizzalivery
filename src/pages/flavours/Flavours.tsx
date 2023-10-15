@@ -25,7 +25,7 @@ import { Title } from "../../components/title/Title"
 
 export default function Flavours() {
   const navigate = useNavigate()
-  const { pizzaSize, pizzaFlavour, setPizzaFlavour } = useContext(OrderContext)
+  const { pizzaSize, pizzaFlavour, setPizzaFlavour, qtdePizzas, } = useContext(OrderContext)
   const [flavourId, setflavourId] = useState("")
 
   const flavoursOptions = [
@@ -118,6 +118,22 @@ export default function Flavours() {
             <Button id={id} onClick={handleClick}>
               Selecionar
             </Button>
+            <select
+              name="quantidade"
+              id="quantidade"
+              defaultValue={""}
+              // onChange={handleChangeQtdePizzas}
+              >
+        <option disabled value="">
+          Selecione
+        </option>
+        {[...Array(qtdePizzas)].map((quantidade) => (
+          <option key={quantidade} value={quantidade}>
+            {quantidade}
+          </option>
+        ))}
+      </select>
+
           </FlavourCard>
         ))}
       </FlavourContentWrapper>
