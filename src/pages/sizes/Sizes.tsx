@@ -7,9 +7,10 @@ import { Title } from "../../components/title/Title"
 import { RadioCard, SizeActionWrapper, SizeContentWrapper } from "./Sizes.style"
 import OrderContext from "../../contexts/OrderContext"
 
+
 export default function Sizes() {
   const navigate = useNavigate()
-  const { pizzaSize, setPizzaSize, flavourId, setFlavourId } = useContext(OrderContext)
+  const { pizzaSize, setPizzaSize, flavourId, setFlavourId, qtdePizzas, setQtdePizzas } = useContext(OrderContext)
 
   const sizeOptions = [
     {
@@ -73,6 +74,13 @@ export default function Sizes() {
     
   }
 
+  const handleChangeQtdePizzas = (event) => {
+    const QTDEatualizado = event.target.value;
+    setQtdePizzas(QTDEatualizado);
+    
+    
+  }
+
   const handleBack = () => {
     navigate(routes.home)
   }
@@ -119,7 +127,26 @@ export default function Sizes() {
               <span>
                 Pizza com {slices} pedaços e {size}cm
               </span>
-            </label>
+              <span>Qtde Pizzas</span>
+              
+              
+              <select
+              name="quantidade"
+              id="quantidade"
+              defaultValue={""}
+              onChange={handleChangeQtdePizzas}
+              >
+        <option disabled value="">
+          Selecione
+        </option>
+        {[...Array(10).keys()].map((quantidade) => (
+          <option key={quantidade + 1} value={quantidade + 1}>
+            {quantidade + 1}
+          </option>
+        ))}
+      </select>
+      </label>
+            
           </RadioCard>
         ))}
       </SizeContentWrapper>
@@ -127,7 +154,7 @@ export default function Sizes() {
         <Button inverse="inverse" onClick={handleBack}>
           Voltar
         </Button>
-        <Button onClick={handleNext}>Escolha o sabor</Button>
+        <Button onClick={handleNext} disabled={!Boolean(qtdePizzas)}>Escolha o sabor</Button>
       </SizeActionWrapper>
     </Layout>
   )
