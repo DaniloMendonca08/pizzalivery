@@ -14,7 +14,7 @@ import {
 } from "./Checkout.style"
 
 export default function Checkout() {
-  const { pizzaOrder } = useContext(OrderContext)
+  const { pizzaOrder, qtdePizzas } = useContext(OrderContext)
 
   const navigate = useNavigate()
 
@@ -66,6 +66,7 @@ export default function Checkout() {
           <p>
             {pizzaOrder?.item.name}/{pizzaOrder?.item.size}
           </p>
+          <p>Qtde: {qtdePizzas}</p>
           <p>{convertToCurrency(pizzaOrder?.item.value)}</p>
 
           {pizzaOrder.item.name2 ? (
