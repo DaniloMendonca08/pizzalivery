@@ -15,15 +15,23 @@ import {
 
 export default function Checkout() {
   const { pizzaOrder, qtdePizzas } = useContext(OrderContext)
+  const [paymentOptions, setPaymentOptions] = useState([])
 
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
-  const paymentOptions = [
-    { id: "20", value: 1, text: "Cartão de crédito" },
-    { id: "21", value: 2, text: "Cartão de débito" },
-    { id: "22", value: 3, text: "Vale refeição" },
-    { id: "23", value: 4, text: "PIX" },
-  ]
+  const getPaymentOptions = async () => {
+    setIsLoading(true)
+    try {
+      const response = await fetch("http://localhost:8000/payment/options")
+      const options = await response.json()
+      setPaymentOptions(options)
+    } catch (error) {
+      alert(`Deu ruim: ${error}`)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const [paymentType, setPaymentType] = useState("")
   // const [isDisabled, setIsDisabled] = useState(true)
@@ -43,14 +51,32 @@ export default function Checkout() {
     return filteredValue[0].text
   }
 
+  const createOrder = (orderPayload) => {
+    try {
+      fetch("http://localhost:8000/order/create_order", {
+        method: "POST",
+        body: JSON.stringify(orderPayload),
+      })
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log("Finally");
+    }
+  }
+
+
   const handleClick = () => {
-    alert("Pedido feito")
+    createOrder(pizzaOrder)
   }
 
   useEffect(() => {
     if (pizzaOrder === undefined) {
       return navigate(routes.pizzaSize)
     }
+  }, [])
+
+  useEffect(() => {
+    getPaymentOptions()
   }, [])
 
   // ?. nullish
@@ -111,7 +137,7 @@ export default function Checkout() {
         </CheckoutItemFlex>
       </CheckoutItem>
       <CheckoutAction>
-        <Button onClick={() => {}} disabled={!Boolean(paymentType)}>
+        <Button onClick={handleClick} disabled={!Boolean(paymentType)}>
           Fazer pedido
         </Button>
       </CheckoutAction>
